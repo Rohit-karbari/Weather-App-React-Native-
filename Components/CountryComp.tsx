@@ -10,39 +10,46 @@ const CountryComp = ({route, navigation} : NativeStackScreenProps<WeatherList,'C
 
 
 
-    const [weather, setWeather] = useState({
-            temperature: '',
-            wind_speed: '',
-            precipitation: '',
-            icon: 'loading...',
-            name:''
+    // const [weather, setWeather] = useState({
+    //         temperature: '',
+    //         wind_speed: '',
+    //         precipitation: '',
+    //         icon: 'loading...',
+    //         name:''
 
-    })
+    // })
 
     const handleTemp = (data : any)=>{
       console.log(data)
         axios.get(`http://api.weatherstack.com/current?access_key=8d8faefa3c032df7735a2cf3db52a467&query=${data}`)
           .then((res) => {
             const result = res.data
-            setWeather({
-              name: result.location.name,
+            // setWeather({
+            //   name: result.location.name,
+            //   temperature: result.current.temperature,
+            //   wind_speed: result.current.wind_speed,
+            //   precipitation: result.current.precip,
+            //   icon: result.current.weather_icons[0]
+            // })
+
+            navigation.navigate('WeatherComp',{
               temperature: result.current.temperature,
               wind_speed: result.current.wind_speed,
               precipitation: result.current.precip,
-              icon: result.current.weather_icons[0]
+              icon: result.current.icon
             })
 
-          })
+        })
           .catch((err) => {
             alert(err.message)
           })
 
-          navigation.navigate('WeatherComp',{
-            temperature: weather.temperature,
-            wind_speed: weather.wind_speed,
-            precipitation: weather.precipitation,
-            icon: weather.icon
-          })
+          // navigation.navigate('WeatherComp',{
+          //   temperature: weather.temperature,
+          //   wind_speed: weather.wind_speed,
+          //   precipitation: weather.precipitation,
+          //   icon: weather.icon
+          // })
     }   
     
   return (

@@ -1,39 +1,52 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import axios from 'axios';
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import { Image ,Button, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView } from 'react-native';
 import { WeatherList } from './Container';
 const SearchComp = ({route, navigation} : NativeStackScreenProps<WeatherList, 'SearchComp'>) => {
     const [input, setInput] = useState('')
-    const [country, setCountry] = useState([])
-    
+    // const [country, setCountry] = useState([])
+
+    // let capital = country.map((ele : any) => ele.capital)
+    // let population = country.map((ele : any) => ele.population)
+    // let flag = country.map((ele : any) => ele.flags.png)
+    // let Longitude = country.map((ele : any) => ele.capitalInfo.latlng[0])
+    // let Latitude = country.map((ele : any) => ele.capitalInfo.latlng[1])
+
     const handleClick = () => { 
         axios.get(`https://restcountries.com/v3.1/name/${input}`)
             .then((res) => {
                 const result = res.data
-                setCountry(result)
+                let capital = result.map((ele : any) => ele.capital)
+                let population = result.map((ele : any) => ele.population)
+                let flag = result.map((ele : any) => ele.flags.png)
+                let Longitude = result.map((ele : any) => ele.capitalInfo.latlng[0])
+                let Latitude = result.map((ele : any) => ele.capitalInfo.latlng[1])
+
+                navigation.navigate('CountryComp',{
+                  capital: capital,
+                  population: population,
+                  flag: flag[0],
+                  Longitude: Longitude,
+                  Latitude: Latitude
+                })
+
             })
             .catch((err) => {
                 alert(err.message)
             })
-
-            setTimeout (() => {
-              navigation.navigate('CountryComp',{
-                capital: capital,
-                population: population,
-                flag: flag[0],
-                Longitude: Longitude,
-                Latitude: Latitude
-              })
-            },1000)
+            
+              // navigation.navigate('CountryComp',{
+              //   capital: capital,
+              //   population: population,
+              //   flag: flag[0],
+              //   Longitude: Longitude,
+              //   Latitude: Latitude
+              // })
            
     }
 
-    const capital = country.map((ele : any) => ele.capital)
-    const population = country.map((ele : any) => ele.population)
-    const flag = country.map((ele : any) => ele.flags.png)
-    const Longitude = country.map((ele : any) => ele.capitalInfo.latlng[0])
-    const Latitude = country.map((ele : any) => ele.capitalInfo.latlng[1])
+
 
   return (
     <ScrollView>
