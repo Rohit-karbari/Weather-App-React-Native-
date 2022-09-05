@@ -15,7 +15,7 @@ export default function App() {
     return (
         <SafeAreaProvider>
         <NavigationContainer>
-            <StatusBar  backgroundColor="lightblue" />
+            <StatusBar style='auto' backgroundColor="lightblue" />
             <Container />
             </NavigationContainer>
      </SafeAreaProvider>

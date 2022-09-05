@@ -6,14 +6,7 @@ import { WeatherList } from './Container';
 const SearchComp = ({route, navigation} : NativeStackScreenProps<WeatherList, 'SearchComp'>) => {
     const [input, setInput] = useState('')
     const [country, setCountry] = useState([])
-
-    const capital = country.map((ele : any) => ele.capital)
-    const population = country.map((ele : any) => ele.population)
-    const flag = country.map((ele : any) => ele.flags.png)
-    const Longitude = country.map((ele : any) => ele.capitalInfo.latlng[0])
-    const Latitude = country.map((ele : any) => ele.capitalInfo.latlng[1])
     
-
     const handleClick = () => { 
         axios.get(`https://restcountries.com/v3.1/name/${input}`)
             .then((res) => {
@@ -23,14 +16,24 @@ const SearchComp = ({route, navigation} : NativeStackScreenProps<WeatherList, 'S
             .catch((err) => {
                 alert(err.message)
             })
-            navigation.navigate('CountryComp',{
-              capital: capital,
-              population: population,
-              flag: flag[0],
-              Longitude: Longitude,
-              Latitude: Latitude
-            })
+
+            setTimeout (() => {
+              navigation.navigate('CountryComp',{
+                capital: capital,
+                population: population,
+                flag: flag[0],
+                Longitude: Longitude,
+                Latitude: Latitude
+              })
+            },1000)
+           
     }
+
+    const capital = country.map((ele : any) => ele.capital)
+    const population = country.map((ele : any) => ele.population)
+    const flag = country.map((ele : any) => ele.flags.png)
+    const Longitude = country.map((ele : any) => ele.capitalInfo.latlng[0])
+    const Latitude = country.map((ele : any) => ele.capitalInfo.latlng[1])
 
   return (
     <ScrollView>
@@ -89,3 +92,5 @@ const styles = StyleSheet.create({
 })
 
 export default SearchComp
+
+
