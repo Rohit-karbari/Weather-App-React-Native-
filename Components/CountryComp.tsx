@@ -36,7 +36,7 @@ const CountryComp = ({route, navigation} : NativeStackScreenProps<WeatherList,'C
               temperature: result.current.temperature,
               wind_speed: result.current.wind_speed,
               precipitation: result.current.precip,
-              icon: result.current.icon
+              icon: result.current.weather_icons[0]
             })
 
         })
